@@ -213,6 +213,8 @@ p.lead { font-size: 1.15rem; max-width: 60ch; }
   scroll-snap-align: center;
   background: var(--olive);
 }
+/* Portrait images fill the frame; landscape images keep the green margin */
+.carousel-track img.portrait { object-fit: cover; }
 .carousel-btn {
   position: absolute;
   top: 50%;
@@ -235,7 +237,7 @@ p.lead { font-size: 1.15rem; max-width: 60ch; }
 .thumb.bur { background: var(--burgundy); }
 
 /* Every card has the same text area height, whatever the category or image size */
-.card-body { padding: 1.2rem 1.3rem 1.5rem; height: 11.5rem; overflow: hidden; }
+.card-body { padding: 1.2rem 1.3rem 1.5rem; height: 12.5rem; overflow: hidden; }
 
 .tag {
   display: inline-block;
