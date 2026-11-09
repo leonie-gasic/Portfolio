@@ -196,7 +196,7 @@ p.lead { font-size: 1.15rem; max-width: 60ch; }
 .thumb.photo { aspect-ratio: auto; display: block; padding: 0; background: var(--olive); }
 .thumb.photo img { display: block; width: 100%; height: auto; }
 /* Carousel: one card, several images, each shown whole */
-.thumb.photo.carousel { position: relative; aspect-ratio: 4 / 5; background: var(--olive); }
+.thumb.photo.carousel { position: relative; aspect-ratio: 2 / 3; background: var(--olive); }
 .carousel-track {
   display: flex;
   height: 100%;
@@ -213,8 +213,6 @@ p.lead { font-size: 1.15rem; max-width: 60ch; }
   scroll-snap-align: center;
   background: var(--olive);
 }
-/* Portrait images fill the frame; landscape images keep the green margin */
-.carousel-track img.portrait { object-fit: cover; }
 .carousel-btn {
   position: absolute;
   top: 50%;
