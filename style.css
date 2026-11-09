@@ -380,7 +380,7 @@ body.center-page > section {
 
 
 /* Start and contact: content block takes the full width so the auto margins do not collapse it */
-body.center-page > section > * { width: 100%; }
+body.center-page > section > *:not(.hero-frame) { width: 100%; }
 
 /* Language buttons inside the header bar: plain text, not menu ovals */
 .page-buttons .lang-toggle .lang-opt {
