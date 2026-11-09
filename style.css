@@ -200,7 +200,7 @@ p.lead { font-size: 1.15rem; max-width: 60ch; }
 /* Carousels of landscape images use a landscape frame, so no green bars */
 .thumb.photo.carousel.landscape { aspect-ratio: 4 / 3; }
 /* Flyer pages keep their own A-format proportion */
-.thumb.photo.carousel.flyer { aspect-ratio: 437 / 612; }
+.thumb.photo.flyer { aspect-ratio: 437 / 612; }
 .carousel-track {
   display: flex;
   height: 100%;
