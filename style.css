@@ -197,6 +197,8 @@ p.lead { font-size: 1.15rem; max-width: 60ch; }
 .thumb.photo img { display: block; width: 100%; height: auto; }
 /* Carousel: one card, several images, each shown whole */
 .thumb.photo.carousel { position: relative; aspect-ratio: 2 / 3; background: var(--olive); }
+/* Carousels of landscape images use a landscape frame, so no green bars */
+.thumb.photo.carousel.landscape { aspect-ratio: 4 / 3; }
 .carousel-track {
   display: flex;
   height: 100%;
