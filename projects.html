@@ -101,40 +101,18 @@
         </div>
       </article>
 
-      <article class="card" data-cat="graphic">
-        <div class="thumb photo"><img src="assets/projects/collage-01.jpg" alt="Collage 1" loading="lazy"></div>
-        <div class="card-body">
-          <span class="tag"><span class="en">Graphic design</span><span class="de">Grafik</span></span>
-          <h3><span class="en">Is it all art?</span><span class="de">Ist alles Kunst?</span></h3>
-          <p><span class="en">Analogue collage from newspaper clippings. A question about art. September 2024.</span><span class="de">Analoge Collage aus Zeitungsausschnitten: eine Frage, was Kunst ist. September 2024.</span></p>
+            <article class="card" data-cat="graphic">
+        <div class="thumb photo carousel">
+          <div class="carousel-track">
+          <img src="assets/projects/collage-01.jpg" alt="Collage 1" loading="lazy">
+          <img src="assets/projects/collage-02.jpg" alt="Collage 2" loading="lazy">
+          <img src="assets/projects/collage-03.jpg" alt="Collage 3" loading="lazy">
+          <img src="assets/projects/collage-04.jpg" alt="Collage 4" loading="lazy">
+          <img src="assets/projects/collage-05.jpg" alt="Collage 5" loading="lazy">
+          </div>
+          <button type="button" class="carousel-btn prev" aria-label="Previous / Zurück">&#8249;</button>
+          <button type="button" class="carousel-btn next" aria-label="Next / Weiter">&#8250;</button>
         </div>
-      </article>
-      <article class="card" data-cat="graphic">
-        <div class="thumb photo"><img src="assets/projects/collage-02.jpg" alt="Collage 2" loading="lazy"></div>
-        <div class="card-body">
-          <span class="tag"><span class="en">Graphic design</span><span class="de">Grafik</span></span>
-          <h3><span class="en">Is it all art?</span><span class="de">Ist alles Kunst?</span></h3>
-          <p><span class="en">Analogue collage from newspaper clippings. A question about art. September 2024.</span><span class="de">Analoge Collage aus Zeitungsausschnitten: eine Frage, was Kunst ist. September 2024.</span></p>
-        </div>
-      </article>
-      <article class="card" data-cat="graphic">
-        <div class="thumb photo"><img src="assets/projects/collage-03.jpg" alt="Collage 3" loading="lazy"></div>
-        <div class="card-body">
-          <span class="tag"><span class="en">Graphic design</span><span class="de">Grafik</span></span>
-          <h3><span class="en">Is it all art?</span><span class="de">Ist alles Kunst?</span></h3>
-          <p><span class="en">Analogue collage from newspaper clippings. A question about art. September 2024.</span><span class="de">Analoge Collage aus Zeitungsausschnitten: eine Frage, was Kunst ist. September 2024.</span></p>
-        </div>
-      </article>
-      <article class="card" data-cat="graphic">
-        <div class="thumb photo"><img src="assets/projects/collage-04.jpg" alt="Collage 4" loading="lazy"></div>
-        <div class="card-body">
-          <span class="tag"><span class="en">Graphic design</span><span class="de">Grafik</span></span>
-          <h3><span class="en">Is it all art?</span><span class="de">Ist alles Kunst?</span></h3>
-          <p><span class="en">Analogue collage from newspaper clippings. A question about art. September 2024.</span><span class="de">Analoge Collage aus Zeitungsausschnitten: eine Frage, was Kunst ist. September 2024.</span></p>
-        </div>
-      </article>
-      <article class="card" data-cat="graphic">
-        <div class="thumb photo"><img src="assets/projects/collage-05.jpg" alt="Collage 5" loading="lazy"></div>
         <div class="card-body">
           <span class="tag"><span class="en">Graphic design</span><span class="de">Grafik</span></span>
           <h3><span class="en">Is it all art?</span><span class="de">Ist alles Kunst?</span></h3>
@@ -173,6 +151,12 @@
   }
   new MutationObserver(relabel).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
   relabel();
+
+  document.querySelectorAll('.carousel').forEach(c => {
+    const track = c.querySelector('.carousel-track');
+    c.querySelector('.prev').addEventListener('click', () => track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' }));
+    c.querySelector('.next').addEventListener('click', () => track.scrollBy({ left: track.clientWidth, behavior: 'smooth' }));
+  });
 </script>
 
 <footer>
