@@ -164,14 +164,18 @@ p.lead { font-size: 1.15rem; max-width: 60ch; }
 }
 
 /* ---------- Cards / gallery ---------- */
+/* Pinterest-style board: masonry columns, each card keeps its own height */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.8rem;
+  columns: 240px;
+  column-gap: 1.4rem;
   margin-top: 2rem;
 }
 
 .card {
+  break-inside: avoid;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 1.4rem;
   background: var(--paper);
   color: var(--ink);
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
