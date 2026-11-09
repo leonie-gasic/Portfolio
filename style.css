@@ -1,0 +1,652 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap');
+
+:root {
+  --burgundy: #7f0d33;
+  --paper: #f6ead8;
+  --ink: #1c1818;
+  --olive: #2a360c;
+  --aubergine: #3b1235;
+  --brown: #3a2220;
+  --cream: #f6e2c8;
+  --script: 'Pinyon Script', 'Brush Script MT', cursive;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  background: var(--burgundy);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--burgundy);
+  color: var(--ink);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+a { color: inherit; }
+
+/* Script for display headings, italic sans-serif for everything else */
+.script {
+  font-family: var(--script);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+/* ---------- Navigation ---------- */
+header.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 6vw;
+  background: var(--aubergine);
+  color: var(--paper);
+  border-bottom: 1px solid rgba(246, 234, 216, 0.2);
+}
+
+.logo {
+  font-family: var(--script);
+  font-style: normal;
+  font-size: 2rem;
+  text-decoration: none;
+  color: var(--paper);
+}
+
+nav ul { list-style: none; display: flex; gap: 1.6rem; }
+
+nav a {
+  text-decoration: none;
+  padding: 0.2rem 0;
+  border-bottom: 2px solid transparent;
+}
+nav a:hover, nav a.active { border-bottom-color: var(--paper); }
+
+/* ---------- Sections and paper cards ---------- */
+section { padding: 3rem 6vw; }
+
+.paper {
+  background: var(--paper);
+  color: var(--ink);
+  padding: 3rem clamp(1.5rem, 4vw, 3.5rem);
+  max-width: 1000px;
+  margin: 0 auto;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+}
+
+.eyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  font-style: normal;
+  font-weight: 700;
+}
+
+h1 { font-size: clamp(3rem, 7vw, 5.4rem); margin: 0.4rem 0 1rem; }
+h2 { font-size: clamp(2.2rem, 5vw, 3.2rem); margin-bottom: 1rem; color: var(--burgundy); }
+h3 { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-style: normal; font-weight: 700; font-size: 1.15rem; margin-bottom: 0.4rem; }
+p.lead { font-size: 1.15rem; max-width: 60ch; }
+
+.btn {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--olive);
+  color: var(--paper);
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 700;
+  transition: background 0.2s;
+}
+.btn:hover { background: var(--burgundy); }
+
+/* ---------- Hero: lace frame with photo strip ---------- */
+.hero-frame {
+  position: relative;
+  container-type: inline-size;
+  max-width: 1400px;
+  margin: 1rem auto 2rem;
+  aspect-ratio: 1513 / 980;
+  background: url('assets/lace_cropped.png') center / 100% 100% no-repeat;
+}
+
+/* Positions and sizes measured from the PDF cover (relative to the lace image) */
+.hero-text {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-text .small {
+  position: absolute;
+  left: 23.7%;
+  top: 34.8%;
+  margin: 0;
+  font-size: 5.18cqw;
+  line-height: 1;
+  font-style: italic;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.hero-text .big {
+  position: absolute;
+  left: 14.9%;
+  top: 44%;
+  margin: 0;
+  font-size: 16.6cqw;
+  line-height: 1;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.strip {
+  position: absolute;
+  left: 76%;
+  top: -3.5%;
+  height: 116.3%;
+  aspect-ratio: 500 / 2618;
+  background: url('assets/strip_original.png') center / 100% 100% no-repeat;
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.4));
+  transform: rotate(20deg);
+  transform-origin: center;
+}
+
+/* ---------- Cards / gallery ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.8rem;
+  margin-top: 2rem;
+}
+
+.card {
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
+  transition: transform 0.25s;
+}
+.card:hover { transform: translateY(-5px); }
+
+.thumb {
+  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  color: var(--paper);
+  font-family: var(--script);
+  font-size: 2rem;
+  background: var(--olive);
+}
+.thumb.aub { background: var(--aubergine); }
+.thumb.brn { background: var(--brown); }
+.thumb.bur { background: var(--burgundy); }
+
+.card-body { padding: 1.2rem 1.3rem 1.5rem; }
+
+.tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  margin-bottom: 0.4rem;
+}
+
+/* ---------- Filter buttons ---------- */
+.filters { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.5rem 0 0; }
+.filters button {
+  border: 1px solid var(--paper);
+  background: transparent;
+  color: var(--paper);
+  padding: 0.45rem 1rem;
+  font: inherit;
+  font-style: italic;
+  cursor: pointer;
+}
+.filters button.active, .filters button:hover { background: var(--paper); color: var(--burgundy); }
+
+/* ---------- Timeline ---------- */
+.timeline { position: relative; margin-top: 2rem; padding-left: 2rem; }
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0.4rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--olive);
+}
+.step { position: relative; margin-bottom: 2.2rem; }
+.step::before {
+  content: "";
+  position: absolute;
+  left: -1.9rem;
+  top: 0.4rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--burgundy);
+}
+.step .year { font-style: italic; font-weight: 700; color: var(--ink); }
+.step h3 { font-style: normal; font-weight: 700; color: var(--ink); }
+
+/* ---------- Language switch ---------- */
+html[lang="de"] .en,
+html[lang="en"] .de { display: none !important; }
+
+.lang-toggle {
+  position: fixed;
+  top: 1.1rem;
+  left: 1rem;
+  z-index: 50;
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+  box-sizing: border-box;
+  height: 3.2rem;
+  padding: 0 1.2rem;
+  border: none;
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--olive);
+  font: inherit;
+  font-style: italic;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.lang-toggle .sep { opacity: 0.35; }
+
+.lang-opt {
+  position: relative;
+  padding: 0 0.1rem;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-style: italic;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.lang-opt.active { opacity: 1; font-weight: 700; }
+
+html[lang="de"] .hero-text .small { font-size: 4cqw; }
+
+/* ---------- Steckbrief ---------- */
+.steck-title { margin-top: 2.5rem; }
+.steckbrief + .steck-title { margin-top: 5.5rem; }
+
+.steckbrief {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem 2rem;
+  margin-top: 1.5rem;
+}
+
+.steckbrief > div {
+  border-bottom: 1px solid rgba(127, 13, 51, 0.35);
+  padding-bottom: 0.7rem;
+}
+
+.steckbrief dt {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--burgundy);
+}
+
+.steckbrief dd {
+  margin: 0.2rem 0 0;
+  font-size: 1.1rem;
+}
+
+.steckbrief ul {
+  margin: 0.2rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.steckbrief li { margin-bottom: 0.15rem; }
+
+/* Languages: names in one column, explanations lined up in a second column */
+.steckbrief .langs {
+  display: grid;
+  grid-template-columns: max-content max-content max-content 1fr;
+  column-gap: 0.5rem;
+  row-gap: 0.15rem;
+  list-style: none;
+  padding-left: 0;
+}
+
+.steckbrief .langs li {
+  display: contents;
+}
+
+/* ---------- Contact ---------- */
+.contact-links a { color: var(--burgundy); font-style: normal; font-weight: 700; }
+
+/* ---------- Page buttons (replace the top menu) ---------- */
+.page-buttons {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 0.6rem;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--olive);
+  padding: 1.1rem 6vw 0.9rem;
+  margin: 0;
+}
+
+/* Language switch lives inside the header bar */
+.page-buttons .lang-toggle.in-header {
+  position: absolute;
+  top: 50%;
+  left: 6vw;
+  transform: translateY(-50%);
+  height: clamp(2.5rem, 4.4vw, 3.2rem);
+  min-width: 0;
+  padding: 0 clamp(0.7rem, 2vw, 2.2rem);
+  white-space: nowrap;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  justify-content: center;
+  margin: 0;
+}
+
+
+/* Start and contact pages: centre the content between header and footer */
+body.center-page > section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+/* Start and contact: content block takes the full width so the auto margins do not collapse it */
+body.center-page > section > * { width: 100%; }
+
+/* Language buttons inside the header bar: plain text, not menu ovals */
+.page-buttons .lang-toggle .lang-opt {
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  height: auto;
+  min-width: 0;
+  padding: 0 0.1rem;
+  display: inline;
+  transform: none;
+}
+
+.page-buttons .lang-toggle .lang-opt::before { left: 0; right: 0; top: auto; bottom: -0.45rem; }
+.page-buttons .lang-toggle .lang-opt::after { left: -4px; right: -4px; top: auto; bottom: -0.45rem; height: 12px; }
+
+/* Contact page: two round icon buttons, email and LinkedIn */
+.contact-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem 2rem;
+  margin-top: 2.5rem;
+}
+
+.contact-buttons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 14rem;
+  width: 14rem;
+  height: 4.2rem;
+  border-radius: 50%;
+  background: var(--olive);
+  color: var(--paper);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s;
+}
+
+.contact-buttons a:hover { transform: translateY(-2px); }
+
+.contact-buttons svg { width: 2.4rem; height: 2.4rem; display: block; }
+
+/* Narrow screens: the buttons keep their size and stack, centred */
+@media (max-width: 600px) {
+  .contact-buttons { justify-content: center; }
+}
+
+/* Home button: small round icon instead of a text label */
+.page-buttons a.home-btn {
+  min-width: 0;
+  width: clamp(2.8rem, 6vw, 4.6rem);
+  padding: 0;
+  line-height: 0;
+}
+
+.page-buttons a.home-btn svg {
+  width: 1.7rem;
+  height: 1.7rem;
+  display: block;
+}
+
+.page-buttons a {
+  background: var(--paper);
+  color: var(--olive);
+  border-radius: 50%;
+  height: clamp(2.5rem, 4.4vw, 3.2rem);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(0.7rem, 2vw, 2.2rem);
+  min-width: 0;
+  white-space: nowrap;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  text-align: center;
+  text-decoration: none;
+  font-style: italic;
+  font-weight: 400;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+/* Second stroke: draws right to left, after the first one */
+.page-buttons a::before,
+.page-buttons button::before,
+.lang-opt::before {
+  content: "";
+  position: absolute;
+  left: 24%;
+  right: 24%;
+  top: calc(50% + 0px);
+  bottom: auto;
+  height: 20px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20' preserveAspectRatio='none'%3E%3Cdefs%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' seed='7' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.4 1.6' result='m'/%3E%3CfeComposite in='SourceGraphic' in2='m' operator='in'/%3E%3C/filter%3E%3C/defs%3E%3Cg fill='none' stroke='%232a360c' stroke-linecap='round' filter='url(%23g)'%3E%3Cpath d='M9 15 C 50 12, 100 17, 150 13 S 186 14, 193 12' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  opacity: 0;
+  pointer-events: none;
+  clip-path: inset(0 0 0 100%);
+  transition: clip-path 0.45s ease-out 0.5s, opacity 0.1s;
+}
+
+.page-buttons a:hover::before,
+.page-buttons button:hover::before,
+.lang-opt:hover::before {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+}
+
+/* Hover: two hand-drawn strokes sketch under the label, one after the other */
+.page-buttons a,
+.page-buttons button {
+  position: relative;
+}
+
+.page-buttons a::after,
+.page-buttons button::after,
+.lang-opt::after {
+  content: "";
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  top: calc(50% + 6px);
+  bottom: auto;
+  height: 20px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20' preserveAspectRatio='none'%3E%3Cdefs%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' seed='4' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.4 1.6' result='m'/%3E%3CfeComposite in='SourceGraphic' in2='m' operator='in'/%3E%3C/filter%3E%3C/defs%3E%3Cg fill='none' stroke='%232a360c' stroke-linecap='round' filter='url(%23g)'%3E%3Cpath d='M3 8 C 40 5, 90 10, 140 6 S 186 7, 197 5' stroke-width='3'/%3E%3C/g%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  opacity: 0;
+  pointer-events: none;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.5s ease-out, opacity 0.2s;
+}
+
+.page-buttons a:hover::after,
+.lang-opt:hover::after {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+}
+
+.page-buttons button {
+  background: var(--paper);
+  color: var(--olive);
+  border-radius: 50%;
+  height: clamp(2.5rem, 4.4vw, 3.2rem);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(0.7rem, 2vw, 2.2rem);
+  min-width: 0;
+  white-space: nowrap;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  text-align: center;
+  border: none;
+  font: inherit;
+  font-style: italic;
+  font-weight: 400;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.page-buttons button:hover::after {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+}
+
+/* Contact box shown on top of the page */
+.contact-dialog {
+  border: none;
+  padding: 0;
+  background: transparent;
+  max-width: min(90vw, 560px);
+}
+
+.contact-dialog::backdrop {
+  background: rgba(28, 24, 24, 0.6);
+}
+
+.contact-dialog .paper {
+  margin: 0;
+}
+
+.contact-details {
+  display: grid;
+  gap: 1.4rem;
+  margin-top: 2rem;
+  font-size: 1.15rem;
+}
+
+.contact-details strong {
+  font-style: normal;
+  color: var(--burgundy);
+}
+
+.contact-lines {
+  margin-top: 1.2rem;
+  font-size: 1.1rem;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--burgundy);
+}
+
+.contact-dialog .btn {
+  border: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* ---------- Footer ---------- */
+footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  margin-top: auto;
+  padding: 0.7rem 6vw;
+  background: var(--olive);
+  line-height: 1.2;
+  color: var(--paper);
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 800px) {
+  header.site-nav { flex-direction: column; gap: 0.8rem; }
+  nav ul { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+}
+
+/* Hand-drawn hover lines, one set under each language option */
+.lang-toggle { padding: 0 1.2rem; }
+
+.lang-opt::after {
+  left: -4px;
+  right: -4px;
+  bottom: -0.45rem;
+  height: 12px;
+}
+
+.lang-opt::before {
+  left: 0;
+  right: 0;
+  bottom: -0.45rem;
+  height: 12px;
+}
+
+
+/* ---------- Project dropdown ---------- */
+.project-filter {
+  margin-top: 1.5rem;
+  padding: 0.5rem 2.4rem 0.5rem 1.1rem;
+  border: 2px solid var(--olive);
+  border-radius: 999px;
+  background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%232a360c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 1rem center;
+  color: var(--olive);
+  font: inherit;
+  font-style: italic;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.project-filter:focus-visible { outline: 2px solid var(--burgundy); outline-offset: 2px; }
+
+/* Phones: header stays on one row, with smaller buttons and language switch */
+@media (max-width: 600px) {
+  .page-buttons { flex-wrap: nowrap; gap: 0.3rem; padding: 0.9rem 4vw 0.8rem; }
+  .page-buttons .lang-toggle.in-header { position: static; transform: none; margin: 0; height: 2.4rem; min-width: 0; padding: 0 0.6rem; font-size: 0.7rem; }
+  .page-buttons a,
+  .page-buttons button { height: 2.4rem; padding: 0 0.5rem; font-size: 0.7rem; }
+  .page-buttons a.home-btn { width: 2.6rem; }
+  .page-buttons a.home-btn svg { width: 1.4rem; height: 1.4rem; }
+}
