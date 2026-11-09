@@ -188,6 +188,9 @@ p.lead { font-size: 1.15rem; max-width: 60ch; }
   font-size: 2rem;
   background: var(--olive);
 }
+/* Work with a real image: show the whole picture, no cropping */
+.thumb.photo { aspect-ratio: auto; display: block; padding: 0; background: var(--olive); }
+.thumb.photo img { display: block; width: 100%; height: auto; }
 .thumb.aub { background: var(--aubergine); }
 .thumb.brn { background: var(--brown); }
 .thumb.bur { background: var(--burgundy); }
