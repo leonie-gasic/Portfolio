@@ -114,7 +114,9 @@ p.lead { font-size: 1.15rem; max-width: 60ch; }
 .hero-frame {
   position: relative;
   container-type: inline-size;
-  max-width: 1400px;
+  /* Never wider than the screen allows: the whole frame must fit the window height too */
+  width: min(100%, 1400px, calc(max(12rem, 100vh - 16rem) * 1.5439));
+  max-width: 100%;
   margin: 1rem auto 2rem;
   aspect-ratio: 1513 / 980;
   background: url('assets/lace_cropped.png') center / 100% 100% no-repeat;
