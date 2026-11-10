@@ -164,23 +164,24 @@ p.lead { font-size: 1.15rem; max-width: 60ch; }
 }
 
 /* ---------- Cards / gallery ---------- */
-/* Pinterest-style board: masonry columns, each card keeps its own height */
+/* Pinterest-style board: three fixed columns, each card keeps its own height */
 .grid {
-  columns: 3;
-  column-gap: 1.4rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.4rem;
+  align-items: start;
   margin-top: 2rem;
 }
 
-/* Three columns stay on laptops and tablets; only phones show one column */
+/* Always three columns, also with a filter that shows only a few works; only phones show one column */
 @media (max-width: 560px) {
-  .grid { columns: 1; }
+  .grid { grid-template-columns: 1fr; }
 }
 
 .card {
-  break-inside: avoid;
-  display: inline-block;
+  display: block;
   width: 100%;
-  margin-bottom: 1.4rem;
+  margin: 0;
   background: var(--paper);
   color: var(--ink);
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
