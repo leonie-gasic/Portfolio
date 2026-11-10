@@ -709,3 +709,43 @@ footer {
   .page-buttons a.home-btn { width: 2.6rem; }
   .page-buttons a.home-btn svg { width: 1.4rem; height: 1.4rem; }
 }
+
+/* ---------- Enlarged view (lightbox) for projects ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 4vh 4vw;
+  background: rgba(30, 12, 20, 0.88);
+}
+.lightbox.open { display: flex; }
+.lightbox-box { position: relative; max-width: 92vw; max-height: 92vh; }
+.lightbox-box .thumb { box-shadow: none; }
+.lightbox-box .thumb.photo:not(.carousel) img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 92vw;
+  max-height: 88vh;
+}
+.lightbox-box .thumb.carousel { width: auto; height: 88vh; max-width: 92vw; }
+.lightbox-close {
+  position: absolute;
+  top: -1rem;
+  left: -1rem;
+  z-index: 2;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: none;
+  border-radius: 50%;
+  background: var(--burgundy);
+  color: var(--paper);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+.grid .thumb img { cursor: zoom-in; }

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-en="Projects · Leonie Gasic" data-de="Projekte · Leonie Gasic">Projects · Leonie Gasic</title>
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
   <script src="lang.js"></script>
 </head>
 <body>
@@ -234,5 +234,54 @@
   <p>Leonie Gasic · <span id="now"></span></p>
 </footer>
 
+<script>
+(function () {
+  const box = document.createElement('div');
+  box.className = 'lightbox';
+  box.innerHTML = '<div class="lightbox-box"><button class="lightbox-close" type="button" aria-label="Close">&times;</button><div class="lightbox-slot"></div></div>';
+  document.body.appendChild(box);
+  const slot = box.querySelector('.lightbox-slot');
+
+  function close() {
+    box.classList.remove('open');
+    slot.innerHTML = '';
+    document.body.style.overflow = '';
+  }
+
+  function bindCarousel(el) {
+    const track = el.querySelector('.carousel-track');
+    if (!track) return;
+    el.querySelector('.prev').addEventListener('click', e => {
+      e.stopPropagation();
+      track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' });
+    });
+    el.querySelector('.next').addEventListener('click', e => {
+      e.stopPropagation();
+      track.scrollBy({ left: track.clientWidth, behavior: 'smooth' });
+    });
+  }
+
+  function open(thumb) {
+    const clone = thumb.cloneNode(true);
+    slot.innerHTML = '';
+    slot.appendChild(clone);
+    bindCarousel(clone);
+    box.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  box.querySelector('.lightbox-close').addEventListener('click', close);
+  box.addEventListener('click', e => { if (e.target === box) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+
+  document.querySelectorAll('#gallery .thumb').forEach(thumb => {
+    if (!thumb.querySelector('img')) return;
+    thumb.addEventListener('click', e => {
+      if (e.target.closest('.carousel-btn')) return;
+      open(thumb);
+    });
+  });
+})();
+</script>
 </body>
 </html>
