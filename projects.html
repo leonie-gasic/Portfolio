@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-en="Projects · Leonie Gasic" data-de="Projekte · Leonie Gasic">Projects · Leonie Gasic</title>
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
   <script src="lang.js"></script>
 </head>
 <body>
@@ -178,18 +178,46 @@
   const select = document.getElementById('project-filter');
   const cards = document.querySelectorAll('#gallery .card');
 
+  const grid = document.getElementById('gallery');
+
+  // Pinterest-style masonry: each visible card goes into the currently shortest column
+  function layout() {
+    const n = window.matchMedia('(max-width: 560px)').matches ? 1 : 3;
+    const cols = Array.from({ length: n }, () => {
+      const d = document.createElement('div');
+      d.className = 'col';
+      return d;
+    });
+    const heights = new Array(n).fill(0);
+    cards.forEach(card => {
+      if (card.style.display === 'none') return;
+      const i = heights.indexOf(Math.min(...heights));
+      cols[i].appendChild(card);
+      heights[i] = cols[i].offsetHeight;
+    });
+    grid.replaceChildren(...cols);
+  }
+
   function filterCards() {
     const f = select.value;
     cards.forEach(card => {
       card.style.display = (f === 'all' || card.dataset.cat === f) ? '' : 'none';
     });
+    layout();
   }
   select.addEventListener('change', filterCards);
+
+  // Re-layout once images have their real size, on window resize and on load
+  cards.forEach(card => card.querySelectorAll('img').forEach(img => img.addEventListener('load', layout)));
+  window.addEventListener('resize', layout);
+  window.addEventListener('load', layout);
+  layout();
 
   function relabel() {
     const l = document.documentElement.lang === 'de' ? 'de' : 'en';
     select.setAttribute('aria-label', l === 'de' ? 'Projekte filtern' : 'Filter projects');
     select.querySelectorAll('option').forEach(o => { o.textContent = o.dataset[l]; });
+    layout();
   }
   new MutationObserver(relabel).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
   relabel();

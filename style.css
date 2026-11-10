@@ -164,18 +164,21 @@ p.lead { font-size: 1.15rem; max-width: 60ch; }
 }
 
 /* ---------- Cards / gallery ---------- */
-/* Pinterest-style board: three fixed columns, each card keeps its own height */
+/* Pinterest-style board: masonry columns, each card only as tall as its content */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
+  align-items: flex-start;
   gap: 1.4rem;
-  align-items: stretch;
   margin-top: 2rem;
 }
 
-/* Always three columns, also with a filter that shows only a few works; only phones show one column */
-@media (max-width: 560px) {
-  .grid { grid-template-columns: 1fr; }
+/* Three columns filled by the projects script (shortest column first); one column on phones */
+.grid .col {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
 }
 
 .card {
