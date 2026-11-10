@@ -169,7 +169,7 @@ p.lead { font-size: 1.15rem; max-width: 60ch; }
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.4rem;
-  align-items: start;
+  align-items: stretch;
   margin-top: 2rem;
 }
 
