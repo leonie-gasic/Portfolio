@@ -188,6 +188,8 @@
       d.className = 'col';
       return d;
     });
+    // attach the empty columns first, so their heights can be measured while cards are added
+    grid.replaceChildren(...cols);
     const heights = new Array(n).fill(0);
     cards.forEach(card => {
       if (card.style.display === 'none') return;
@@ -195,7 +197,6 @@
       cols[i].appendChild(card);
       heights[i] = cols[i].offsetHeight;
     });
-    grid.replaceChildren(...cols);
   }
 
   function filterCards() {
