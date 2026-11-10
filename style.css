@@ -171,10 +171,7 @@ p.lead { font-size: 1.15rem; max-width: 60ch; }
   margin-top: 2rem;
 }
 
-/* Fewer columns on smaller screens, so the works stay readable */
-@media (max-width: 900px) {
-  .grid { columns: 2; }
-}
+/* Three columns stay on laptops and tablets; only phones show one column */
 @media (max-width: 560px) {
   .grid { columns: 1; }
 }
