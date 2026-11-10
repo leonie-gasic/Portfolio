@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-en="Projects · Leonie Gasic" data-de="Projekte · Leonie Gasic">Projects · Leonie Gasic</title>
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=11">
   <script src="lang.js"></script>
 </head>
 <body>
@@ -33,7 +33,20 @@
 
     <div class="grid" id="gallery">
       <article class="card" data-cat="video">
-        <div class="thumb video"><video controls preload="metadata" poster="assets/projects/kurzfilm-poster.jpg"><source src="assets/projects/kurzfilm-mixmedia.mp4" type="video/mp4"></video></div>
+        <div class="thumb video"><div class="vplayer" id="film">
+          <video id="filmVideo" muted autoplay loop playsinline disablepictureinpicture preload="auto" poster="assets/projects/kurzfilm-poster.jpg"><source src="assets/projects/kurzfilm-mixmedia.mp4" type="video/mp4"></video>
+          <div class="vbar">
+            <button type="button" class="vb-play" aria-label="Play / Pause">&#9654;</button>
+            <button type="button" class="vb-stop" aria-label="Stop">&#9632;</button>
+            <input type="range" class="vb-seek" min="0" max="100" step="0.1" value="0" aria-label="Seek">
+            <span class="vb-time">0:00</span>
+            <input type="range" class="vb-vol" min="0" max="1" step="0.05" value="1" aria-label="Volume">
+            <select class="vb-speed" aria-label="Speed">
+              <option value="0.5">0.5&times;</option><option value="1" selected>1&times;</option><option value="1.5">1.5&times;</option><option value="2">2&times;</option>
+            </select>
+            <button type="button" class="vb-full" aria-label="Fullscreen">&#x26F6;</button>
+          </div>
+        </div></div>
         <div class="card-body">
           <span class="tag"><span class="en">Videography</span><span class="de">Videografie</span></span>
           <h3><span class="en">Mixed Media short film</span><span class="de">Mixed Media Kurzfilm</span></h3>
@@ -352,6 +365,76 @@
       open(thumb);
     });
   });
+})();
+</script>
+<script>
+(function () {
+  const player = document.getElementById('film');
+  if (!player) return;
+  const video = document.getElementById('filmVideo');
+  const bar = player.querySelector('.vbar');
+  const playBtn = player.querySelector('.vb-play');
+  const stopBtn = player.querySelector('.vb-stop');
+  const seek = player.querySelector('.vb-seek');
+  const timeEl = player.querySelector('.vb-time');
+  const vol = player.querySelector('.vb-vol');
+  const speed = player.querySelector('.vb-speed');
+  const fullBtn = player.querySelector('.vb-full');
+  let interactive = false;
+
+  const fmt = s => { if (!isFinite(s)) return '0:00'; const m = Math.floor(s / 60); const r = Math.floor(s % 60); return m + ':' + String(r).padStart(2, '0'); };
+
+  function enterInteractive() {
+    interactive = true;
+    player.classList.add('interactive');
+    video.muted = false;
+    video.volume = parseFloat(vol.value);
+  }
+
+  function togglePlay() {
+    if (!interactive) { enterInteractive(); video.play(); return; }
+    if (video.paused) video.play(); else video.pause();
+  }
+
+  function updatePlayIcon() { playBtn.innerHTML = video.paused ? '&#9654;' : '&#10074;&#10074;'; }
+
+  video.addEventListener('click', togglePlay);
+  playBtn.addEventListener('click', e => { e.stopPropagation(); togglePlay(); });
+  stopBtn.addEventListener('click', e => { e.stopPropagation(); video.pause(); video.currentTime = 0; updatePlayIcon(); });
+  video.addEventListener('play', updatePlayIcon);
+  video.addEventListener('pause', updatePlayIcon);
+
+  video.addEventListener('timeupdate', () => {
+    if (video.duration) seek.value = (video.currentTime / video.duration) * 100;
+    timeEl.textContent = fmt(video.currentTime) + ' / ' + fmt(video.duration);
+  });
+  seek.addEventListener('input', e => {
+    e.stopPropagation();
+    if (video.duration) video.currentTime = (seek.value / 100) * video.duration;
+  });
+  vol.addEventListener('input', e => {
+    e.stopPropagation();
+    video.volume = parseFloat(vol.value);
+    video.muted = video.volume === 0;
+  });
+  speed.addEventListener('change', e => { e.stopPropagation(); video.playbackRate = parseFloat(speed.value); });
+  speed.addEventListener('click', e => e.stopPropagation());
+
+  function toggleFull(e) {
+    if (e) e.stopPropagation();
+    const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+    if (fsEl) {
+      (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    } else {
+      (player.requestFullscreen || player.webkitRequestFullscreen).call(player);
+    }
+  }
+  fullBtn.addEventListener('click', toggleFull);
+
+  bar.addEventListener('click', e => e.stopPropagation());
+  // no right-click menu on the film, so it cannot be saved from there
+  player.addEventListener('contextmenu', e => e.preventDefault());
+  video.addEventListener('dragstart', e => e.preventDefault());
 })();
 </script>
 </body>
