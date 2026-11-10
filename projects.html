@@ -372,6 +372,16 @@
 <script>
   const select = document.getElementById('project-filter');
   const cards = document.querySelectorAll('#gallery .card');
+  const originalOrder = Array.from(cards);
+  let order = originalOrder.slice();
+
+  function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
 
   const grid = document.getElementById('gallery');
 
@@ -386,7 +396,7 @@
     // attach the empty columns first, so their heights can be measured while cards are added
     grid.replaceChildren(...cols);
     const heights = new Array(n).fill(0);
-    cards.forEach(card => {
+    order.forEach(card => {
       if (card.style.display === 'none') return;
       const i = heights.indexOf(Math.min(...heights));
       cols[i].appendChild(card);
@@ -396,6 +406,8 @@
 
   function filterCards() {
     const f = select.value;
+    // "all": random order; a single category: the original order
+    order = f === 'all' ? shuffle(originalOrder.slice()) : originalOrder.slice();
     cards.forEach(card => {
       card.style.display = (f === 'all' || card.dataset.cat === f) ? '' : 'none';
     });
@@ -411,6 +423,7 @@
     lastWidth = window.innerWidth;
     layout();
   });
+  order = shuffle(originalOrder.slice());
   layout();
 
   function relabel() {
