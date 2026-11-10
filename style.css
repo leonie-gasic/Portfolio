@@ -179,7 +179,8 @@ p.lead { font-size: 1.15rem; max-width: 60ch; }
 }
 
 .card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   margin: 0;
   background: var(--paper);
@@ -245,7 +246,7 @@ p.lead { font-size: 1.15rem; max-width: 60ch; }
 .thumb.bur { background: var(--burgundy); }
 
 /* Every card has the same text area height, whatever the category or image size */
-.card-body { padding: 1.2rem 1.3rem 1.5rem; height: 12.5rem; overflow: hidden; }
+.card-body { padding: 1.2rem 1.3rem 1.5rem; flex: 1; }
 
 .tag {
   display: inline-block;
