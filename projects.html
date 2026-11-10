@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-en="Projects · Leonie Gasic" data-de="Projekte · Leonie Gasic">Projects · Leonie Gasic</title>
-  <link rel="stylesheet" href="style.css?v=12">
+  <link rel="stylesheet" href="style.css?v=13">
   <script src="lang.js"></script>
 </head>
 <body>
@@ -371,12 +371,11 @@
         '<video muted playsinline disablepictureinpicture preload="auto" loop poster="' + poster + '"><source src="' + src + '" type="video/mp4"></video>' +
         '<div class="vbar">' +
           '<button type="button" class="vb-play" aria-label="Play / Pause">&#10074;&#10074;</button>' +
-          '<button type="button" class="vb-stop" aria-label="Stop">&#9632;</button>' +
           '<input type="range" class="vb-seek" min="0" max="100" step="0.1" value="0" aria-label="Seek">' +
           '<span class="vb-time">0:00</span>' +
+          '<svg class="vb-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>' +
           '<input type="range" class="vb-vol" min="0" max="1" step="0.05" value="1" aria-label="Volume">' +
           '<select class="vb-speed" aria-label="Speed"><option value="0.5">0.5&times;</option><option value="1" selected>1&times;</option><option value="1.5">1.5&times;</option><option value="2">2&times;</option></select>' +
-          '<button type="button" class="vb-full" aria-label="Fullscreen">&#x26F6;</button>' +
         '</div>' +
       '</div>' +
     '</div>';
@@ -385,12 +384,10 @@
   const player = overlay.querySelector('.vplayer');
   const big = overlay.querySelector('video');
   const playBtn = overlay.querySelector('.vb-play');
-  const stopBtn = overlay.querySelector('.vb-stop');
   const seek = overlay.querySelector('.vb-seek');
   const timeEl = overlay.querySelector('.vb-time');
   const vol = overlay.querySelector('.vb-vol');
   const speed = overlay.querySelector('.vb-speed');
-  const fullBtn = overlay.querySelector('.vb-full');
 
   const fmt = s => { if (!isFinite(s)) return '0:00'; const m = Math.floor(s / 60); const r = Math.floor(s % 60); return m + ':' + String(r).padStart(2, '0'); };
 
@@ -423,7 +420,6 @@
 
   playBtn.addEventListener('click', e => { e.stopPropagation(); togglePlay(); });
   big.addEventListener('click', togglePlay);
-  stopBtn.addEventListener('click', e => { e.stopPropagation(); big.pause(); big.currentTime = 0; updatePlayIcon(); });
   big.addEventListener('play', updatePlayIcon);
   big.addEventListener('pause', updatePlayIcon);
   big.addEventListener('timeupdate', () => {
@@ -436,11 +432,6 @@
   speed.addEventListener('click', e => e.stopPropagation());
   overlay.querySelector('.vbar').addEventListener('click', e => e.stopPropagation());
 
-  fullBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    if (document.fullscreenElement) document.exitFullscreen();
-    else (player.requestFullscreen || player.webkitRequestFullscreen).call(player);
-  });
 
   // no right-click menu on the film
   [cardVideo, big].forEach(v => v.addEventListener('contextmenu', e => e.preventDefault()));

@@ -770,6 +770,7 @@ footer {
 }
 .vbar input[type=range] { flex: 1 1 auto; min-width: 0; accent-color: var(--burgundy); }
 .vbar .vb-vol { flex: 0 0 5rem; }
+.vbar .vb-icon { flex: 0 0 auto; }
 .vbar .vb-time { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .vbar select { flex: 0 0 auto; border: none; border-radius: 0.3rem; padding: 0.2rem 0.3rem; background: var(--paper); color: var(--ink); }
 .vplayer:fullscreen { background: #000; }
