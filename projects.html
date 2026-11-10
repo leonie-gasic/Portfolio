@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-en="Projects · Leonie Gasic" data-de="Projekte · Leonie Gasic">Projects · Leonie Gasic</title>
-  <link rel="stylesheet" href="style.css?v=11">
+  <link rel="stylesheet" href="style.css?v=12">
   <script src="lang.js"></script>
 </head>
 <body>
@@ -33,20 +33,7 @@
 
     <div class="grid" id="gallery">
       <article class="card" data-cat="video">
-        <div class="thumb video"><div class="vplayer" id="film">
-          <video id="filmVideo" muted autoplay loop playsinline disablepictureinpicture preload="auto" poster="assets/projects/kurzfilm-poster.jpg"><source src="assets/projects/kurzfilm-mixmedia.mp4" type="video/mp4"></video>
-          <div class="vbar">
-            <button type="button" class="vb-play" aria-label="Play / Pause">&#9654;</button>
-            <button type="button" class="vb-stop" aria-label="Stop">&#9632;</button>
-            <input type="range" class="vb-seek" min="0" max="100" step="0.1" value="0" aria-label="Seek">
-            <span class="vb-time">0:00</span>
-            <input type="range" class="vb-vol" min="0" max="1" step="0.05" value="1" aria-label="Volume">
-            <select class="vb-speed" aria-label="Speed">
-              <option value="0.5">0.5&times;</option><option value="1" selected>1&times;</option><option value="1.5">1.5&times;</option><option value="2">2&times;</option>
-            </select>
-            <button type="button" class="vb-full" aria-label="Fullscreen">&#x26F6;</button>
-          </div>
-        </div></div>
+        <div class="thumb video"><video id="filmVideo" muted autoplay loop playsinline disablepictureinpicture preload="auto" poster="assets/projects/kurzfilm-poster.jpg"><source src="assets/projects/kurzfilm-mixmedia.mp4" type="video/mp4"></video></div>
         <div class="card-body">
           <span class="tag"><span class="en">Videography</span><span class="de">Videografie</span></span>
           <h3><span class="en">Mixed Media short film</span><span class="de">Mixed Media Kurzfilm</span></h3>
@@ -369,72 +356,94 @@
 </script>
 <script>
 (function () {
-  const player = document.getElementById('film');
-  if (!player) return;
-  const video = document.getElementById('filmVideo');
-  const bar = player.querySelector('.vbar');
-  const playBtn = player.querySelector('.vb-play');
-  const stopBtn = player.querySelector('.vb-stop');
-  const seek = player.querySelector('.vb-seek');
-  const timeEl = player.querySelector('.vb-time');
-  const vol = player.querySelector('.vb-vol');
-  const speed = player.querySelector('.vb-speed');
-  const fullBtn = player.querySelector('.vb-full');
-  let interactive = false;
+  const cardVideo = document.getElementById('filmVideo');
+  if (!cardVideo) return;
+  const src = cardVideo.querySelector('source').getAttribute('src');
+  const poster = cardVideo.getAttribute('poster');
+
+  // Enlarged view: opens with sound and controls at the same point in the film
+  const overlay = document.createElement('div');
+  overlay.className = 'lightbox';
+  overlay.innerHTML =
+    '<div class="lightbox-box film-box">' +
+      '<button class="lightbox-close" type="button" aria-label="Close">&times;</button>' +
+      '<div class="vplayer">' +
+        '<video muted playsinline disablepictureinpicture preload="auto" loop poster="' + poster + '"><source src="' + src + '" type="video/mp4"></video>' +
+        '<div class="vbar">' +
+          '<button type="button" class="vb-play" aria-label="Play / Pause">&#10074;&#10074;</button>' +
+          '<button type="button" class="vb-stop" aria-label="Stop">&#9632;</button>' +
+          '<input type="range" class="vb-seek" min="0" max="100" step="0.1" value="0" aria-label="Seek">' +
+          '<span class="vb-time">0:00</span>' +
+          '<input type="range" class="vb-vol" min="0" max="1" step="0.05" value="1" aria-label="Volume">' +
+          '<select class="vb-speed" aria-label="Speed"><option value="0.5">0.5&times;</option><option value="1" selected>1&times;</option><option value="1.5">1.5&times;</option><option value="2">2&times;</option></select>' +
+          '<button type="button" class="vb-full" aria-label="Fullscreen">&#x26F6;</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+
+  const player = overlay.querySelector('.vplayer');
+  const big = overlay.querySelector('video');
+  const playBtn = overlay.querySelector('.vb-play');
+  const stopBtn = overlay.querySelector('.vb-stop');
+  const seek = overlay.querySelector('.vb-seek');
+  const timeEl = overlay.querySelector('.vb-time');
+  const vol = overlay.querySelector('.vb-vol');
+  const speed = overlay.querySelector('.vb-speed');
+  const fullBtn = overlay.querySelector('.vb-full');
 
   const fmt = s => { if (!isFinite(s)) return '0:00'; const m = Math.floor(s / 60); const r = Math.floor(s % 60); return m + ':' + String(r).padStart(2, '0'); };
 
-  function enterInteractive() {
-    interactive = true;
-    player.classList.add('interactive');
-    video.muted = false;
-    video.volume = parseFloat(vol.value);
+  function openFilm() {
+    big.currentTime = cardVideo.currentTime;
+    big.muted = false;
+    big.volume = parseFloat(vol.value);
+    cardVideo.pause();
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    big.play().catch(() => {});
   }
 
-  function togglePlay() {
-    if (!interactive) { enterInteractive(); video.play(); return; }
-    if (video.paused) video.play(); else video.pause();
+  function closeFilm() {
+    if (document.fullscreenElement) document.exitFullscreen();
+    big.pause();
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    cardVideo.play().catch(() => {});
   }
 
-  function updatePlayIcon() { playBtn.innerHTML = video.paused ? '&#9654;' : '&#10074;&#10074;'; }
+  function togglePlay() { if (big.paused) big.play(); else big.pause(); }
+  function updatePlayIcon() { playBtn.innerHTML = big.paused ? '&#9654;' : '&#10074;&#10074;'; }
 
-  video.addEventListener('click', togglePlay);
+  cardVideo.style.cursor = 'zoom-in';
+  cardVideo.addEventListener('click', openFilm);
+  overlay.querySelector('.lightbox-close').addEventListener('click', closeFilm);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeFilm(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open') && !document.fullscreenElement) closeFilm(); });
+
   playBtn.addEventListener('click', e => { e.stopPropagation(); togglePlay(); });
-  stopBtn.addEventListener('click', e => { e.stopPropagation(); video.pause(); video.currentTime = 0; updatePlayIcon(); });
-  video.addEventListener('play', updatePlayIcon);
-  video.addEventListener('pause', updatePlayIcon);
-
-  video.addEventListener('timeupdate', () => {
-    if (video.duration) seek.value = (video.currentTime / video.duration) * 100;
-    timeEl.textContent = fmt(video.currentTime) + ' / ' + fmt(video.duration);
+  big.addEventListener('click', togglePlay);
+  stopBtn.addEventListener('click', e => { e.stopPropagation(); big.pause(); big.currentTime = 0; updatePlayIcon(); });
+  big.addEventListener('play', updatePlayIcon);
+  big.addEventListener('pause', updatePlayIcon);
+  big.addEventListener('timeupdate', () => {
+    if (big.duration) seek.value = (big.currentTime / big.duration) * 100;
+    timeEl.textContent = fmt(big.currentTime) + ' / ' + fmt(big.duration);
   });
-  seek.addEventListener('input', e => {
-    e.stopPropagation();
-    if (video.duration) video.currentTime = (seek.value / 100) * video.duration;
-  });
-  vol.addEventListener('input', e => {
-    e.stopPropagation();
-    video.volume = parseFloat(vol.value);
-    video.muted = video.volume === 0;
-  });
-  speed.addEventListener('change', e => { e.stopPropagation(); video.playbackRate = parseFloat(speed.value); });
+  seek.addEventListener('input', e => { e.stopPropagation(); if (big.duration) big.currentTime = (seek.value / 100) * big.duration; });
+  vol.addEventListener('input', e => { e.stopPropagation(); big.volume = parseFloat(vol.value); big.muted = big.volume === 0; });
+  speed.addEventListener('change', e => { e.stopPropagation(); big.playbackRate = parseFloat(speed.value); });
   speed.addEventListener('click', e => e.stopPropagation());
+  overlay.querySelector('.vbar').addEventListener('click', e => e.stopPropagation());
 
-  function toggleFull(e) {
-    if (e) e.stopPropagation();
-    const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
-    if (fsEl) {
-      (document.exitFullscreen || document.webkitExitFullscreen).call(document);
-    } else {
-      (player.requestFullscreen || player.webkitRequestFullscreen).call(player);
-    }
-  }
-  fullBtn.addEventListener('click', toggleFull);
+  fullBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    if (document.fullscreenElement) document.exitFullscreen();
+    else (player.requestFullscreen || player.webkitRequestFullscreen).call(player);
+  });
 
-  bar.addEventListener('click', e => e.stopPropagation());
-  // no right-click menu on the film, so it cannot be saved from there
-  player.addEventListener('contextmenu', e => e.preventDefault());
-  video.addEventListener('dragstart', e => e.preventDefault());
+  // no right-click menu on the film
+  [cardVideo, big].forEach(v => v.addEventListener('contextmenu', e => e.preventDefault()));
 })();
 </script>
 </body>
