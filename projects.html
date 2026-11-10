@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-en="Projects · Leonie Gasic" data-de="Projekte · Leonie Gasic">Projects · Leonie Gasic</title>
-  <link rel="stylesheet" href="style.css?v=13">
+  <link rel="stylesheet" href="style.css?v=14">
   <script src="lang.js"></script>
 </head>
 <body>
@@ -33,11 +33,20 @@
 
     <div class="grid" id="gallery">
       <article class="card" data-cat="video">
-        <div class="thumb video"><video id="filmVideo" muted autoplay loop playsinline disablepictureinpicture preload="auto" poster="assets/projects/kurzfilm-poster.jpg"><source src="assets/projects/kurzfilm-mixmedia.mp4" type="video/mp4"></video></div>
+        <div class="thumb video"><video class="film" muted autoplay loop playsinline disablepictureinpicture preload="auto" poster="assets/projects/kurzfilm-poster.jpg"><source src="assets/projects/kurzfilm-mixmedia.mp4" type="video/mp4"></video></div>
         <div class="card-body">
           <span class="tag"><span class="en">Videography</span><span class="de">Videografie</span></span>
           <h3><span class="en">Mixed Media short film</span><span class="de">Mixed Media Kurzfilm</span></h3>
           <p><span class="en">Photographed, printed, drawn over, photographed again and edited together. April 2025.</span><span class="de">Fotografiert, ausgedruckt, dazu gezeichnet, fotografiert, zusammengeschnitten. April 2025.</span></p>
+        </div>
+      </article>
+
+      <article class="card" data-cat="video">
+        <div class="thumb video"><video class="film" muted autoplay loop playsinline disablepictureinpicture preload="auto" poster="assets/projects/kurzfilm-sonder-poster.jpg"><source src="assets/projects/kurzfilm-sonder.mp4" type="video/mp4"></video></div>
+        <div class="card-body">
+          <span class="tag"><span class="en">Videography</span><span class="de">Videografie</span></span>
+          <h3><span class="en">Kurzfilm Sonder</span><span class="de">Kurzfilm Sonder</span></h3>
+          <p><span class="en">Filmed and edited together in Premiere Pro. October 2024.</span><span class="de">Gefilmt und zusammengeschnitten mit Premiere Pro. Oktober 2024.</span></p>
         </div>
       </article>
 
@@ -356,7 +365,9 @@
 </script>
 <script>
 (function () {
-  const cardVideo = document.getElementById('filmVideo');
+  document.querySelectorAll('video.film').forEach(setupFilm);
+
+  function setupFilm(cardVideo) {
   if (!cardVideo) return;
   const src = cardVideo.querySelector('source').getAttribute('src');
   const poster = cardVideo.getAttribute('poster');
@@ -435,6 +446,7 @@
 
   // no right-click menu on the film
   [cardVideo, big].forEach(v => v.addEventListener('contextmenu', e => e.preventDefault()));
+  }
 })();
 </script>
 </body>
