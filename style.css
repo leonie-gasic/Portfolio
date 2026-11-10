@@ -166,9 +166,17 @@ p.lead { font-size: 1.15rem; max-width: 60ch; }
 /* ---------- Cards / gallery ---------- */
 /* Pinterest-style board: masonry columns, each card keeps its own height */
 .grid {
-  columns: 240px;
+  columns: 3;
   column-gap: 1.4rem;
   margin-top: 2rem;
+}
+
+/* Fewer columns on smaller screens, so the works stay readable */
+@media (max-width: 900px) {
+  .grid { columns: 2; }
+}
+@media (max-width: 560px) {
+  .grid { columns: 1; }
 }
 
 .card {
