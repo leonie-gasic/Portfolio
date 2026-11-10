@@ -775,3 +775,15 @@ footer {
 .vbar select { flex: 0 0 auto; border: none; border-radius: 0.3rem; padding: 0.2rem 0.3rem; background: var(--paper); color: var(--ink); }
 .vplayer:fullscreen { background: #000; }
 .vplayer:fullscreen video { height: 100%; }
+
+/* Board carousels: arrows only appear while the pointer is over the picture; the enlarged view keeps them */
+.grid .thumb.carousel .carousel-btn {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.grid .thumb.carousel:hover .carousel-btn,
+.grid .thumb.carousel:focus-within .carousel-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
